@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star, Heart, Gift } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '../components/UI/use-toast';
 
 const HomePage = () => {
   const { addToCart } = useCart();

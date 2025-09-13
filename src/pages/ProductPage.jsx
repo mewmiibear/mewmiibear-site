@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Star, Heart, Share2, Minus, Plus, ShoppingBag, ArrowLeft } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '../components/UI/use-toast';
 
 const ProductPage = () => {
   const { id } = useParams();

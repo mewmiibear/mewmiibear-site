@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, Send, Heart } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '../components/UI/use-toast';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useCart } from '@/contexts/CartContext';
 import { Lock, CreditCard, ArrowLeft, ShoppingBag } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '../components/UI/use-toast';
 
 const CheckoutPage = () => {
   const { items, getCartTotal } = useCart();
