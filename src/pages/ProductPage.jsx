@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Star, Heart, Share2, Minus, Plus, ShoppingBag, ArrowLeft } from 'lucide-react';
-import { useCart } from '@/contexts/CartContext';
+import { useCart } from '../contexts/CartContext';
 import { toast } from '../components/UI/use-toast';
 
 const ProductPage = () => {
@@ -12,41 +12,19 @@ const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
 
-  // Mock product data - in real app, this would come from API
-  const product = {
-    id: parseInt(id),
-    name: 'Kawaii Bear Notebook',
-    price: 24.99,
-    originalPrice: 29.99,
-    images: [
-      'Cute pink notebook with kawaii bear design and pastel colors - main view',
-      'Kawaii bear notebook opened showing lined pages with cute headers',
-      'Close-up of kawaii bear notebook cover with embossed details',
-      'Kawaii bear notebook size comparison with hand'
-    ],
-    category: 'stationery',
-    rating: 4.8,
-    reviews: 124,
-    inStock: true,
-    stockCount: 15,
-    description: 'This adorable kawaii bear notebook is perfect for all your note-taking needs! Featuring a super cute bear design in soft pastel colors, this notebook will bring joy to your daily writing. The high-quality paper is perfect for pens, pencils, and even light markers.',
-    features: [
-      '📝 120 lined pages',
-      '🌸 A5 size (5.8" x 8.3")',
-      '💕 Soft-touch cover',
-      '🎀 Ribbon bookmark',
-      '⭐ Acid-free paper',
-      '🧸 Kawaii bear design'
-    ],
-    specifications: {
-      'Dimensions': '5.8" x 8.3" x 0.6"',
-      'Pages': '120 lined pages',
-      'Paper Weight': '80gsm',
-      'Cover Material': 'Soft-touch laminated cardstock',
-      'Binding': 'Perfect bound',
-      'Made in': 'Japan'
-    }
-  };
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data, error } = await supabase.from('products').select('*').eq('id', id).single();
+      if (error) setError(error.message);
+      else setProduct(data);
+      setLoading(false);
+    };
+    fetchProduct();
+  }, [id]);
 
   const relatedProducts = [
     {
@@ -116,6 +94,14 @@ const ProductPage = () => {
     }
   };
 
+  if (loading) {
+    return <div className="flex justify-center items-center min-h-screen bg-pink-50 text-pink-500 text-xl">Loading product...</div>;
+  }
+  if (error || !product) {
+    return <div className="flex justify-center items-center min-h-screen bg-pink-50 text-red-500 text-xl">Product not found.</div>;
+  }
+
+  // You can further map product fields to your UI below
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -138,10 +124,6 @@ const ProductPage = () => {
           <Link to="/" className="hover:text-pink-500">Home</Link>
           <span>/</span>
           <Link to="/shop" className="hover:text-pink-500">Shop</Link>
-          <span>/</span>
-          <Link to={`/shop/${product.category}`} className="hover:text-pink-500 capitalize">
-            {product.category}
-          </Link>
           <span>/</span>
           <span className="text-gray-800">{product.name}</span>
         </motion.div>
@@ -172,24 +154,7 @@ const ProductPage = () => {
               <img 
                 className="w-full h-96 object-cover"
                 alt={product.name}
-               src="https://images.unsplash.com/photo-1595872018818-97555653a011" />
-            </div>
-            
-            <div className="grid grid-cols-4 gap-2">
-              {product.images.map((image, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`kawaii-card overflow-hidden kawaii-hover ${
-                    selectedImage === index ? 'ring-2 ring-pink-500' : ''
-                  }`}
-                >
-                  <img 
-                    className="w-full h-20 object-cover"
-                    alt={`${product.name} view ${index + 1}`}
-                   src="https://images.unsplash.com/photo-1595872018818-97555653a011" />
-                </button>
-              ))}
+                src={product.image_url || 'https://images.unsplash.com/photo-1595872018818-97555653a011'} />
             </div>
           </motion.div>
 
@@ -201,55 +166,13 @@ const ProductPage = () => {
           >
             <div>
               <h1 className="text-3xl font-bold text-gray-800 mb-2">{product.name}</h1>
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="flex items-center space-x-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className={i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}
-                    />
-                  ))}
-                  <span className="text-sm text-gray-600 ml-2">
-                    {product.rating} ({product.reviews} reviews)
-                  </span>
-                </div>
-              </div>
             </div>
 
             <div className="flex items-center space-x-4">
               <span className="text-3xl font-bold text-pink-500">${product.price}</span>
-              {product.originalPrice && (
-                <span className="text-xl text-gray-400 line-through">${product.originalPrice}</span>
-              )}
-              {product.originalPrice && (
-                <span className="bg-red-500 text-white px-2 py-1 rounded-full text-sm font-semibold">
-                  Save ${(product.originalPrice - product.price).toFixed(2)}
-                </span>
-              )}
             </div>
 
             <p className="text-gray-700 leading-relaxed">{product.description}</p>
-
-            {/* Features */}
-            <div>
-              <h3 className="font-semibold text-gray-800 mb-3">Features:</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {product.features.map((feature, index) => (
-                  <div key={index} className="text-sm text-gray-600">
-                    {feature}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Stock Status */}
-            <div className="flex items-center space-x-2">
-              <div className={`w-3 h-3 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`}></div>
-              <span className={`font-semibold ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
-                {product.inStock ? `In Stock (${product.stockCount} left)` : 'Out of Stock'}
-              </span>
-            </div>
 
             {/* Quantity and Add to Cart */}
             <div className="space-y-4">
@@ -266,7 +189,7 @@ const ProductPage = () => {
                   <span className="w-12 text-center font-semibold">{quantity}</span>
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    disabled={quantity >= product.stockCount}
+                    disabled={product.stock && quantity >= product.stock}
                     className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Plus size={16} />
@@ -277,7 +200,6 @@ const ProductPage = () => {
               <div className="flex space-x-4">
                 <button
                   onClick={handleAddToCart}
-                  disabled={!product.inStock}
                   className="kawaii-button flex-1 flex items-center justify-center space-x-2 text-lg py-4"
                 >
                   <ShoppingBag size={20} />
@@ -305,126 +227,6 @@ const ProductPage = () => {
             </div>
           </motion.div>
         </div>
-
-        {/* Product Details Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="kawaii-card p-8 mb-16"
-        >
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Specifications</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {Object.entries(product.specifications).map(([key, value]) => (
-                  <div key={key} className="flex justify-between py-2 border-b border-gray-200">
-                    <span className="font-semibold text-gray-700">{key}:</span>
-                    <span className="text-gray-600">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Reviews */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="kawaii-card p-8 mb-16"
-        >
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">Customer Reviews</h2>
-            <button
-              onClick={() => toast({
-                title: "Write Review ✍️",
-                description: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀"
-              })}
-              className="kawaii-button"
-            >
-              Write Review
-            </button>
-          </div>
-
-          <div className="space-y-6">
-            {reviews.map((review) => (
-              <div key={review.id} className="border-b border-gray-200 pb-6 last:border-b-0">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center space-x-3">
-                    <span className="font-semibold text-gray-800">{review.name}</span>
-                    {review.verified && (
-                      <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                        Verified Purchase
-                      </span>
-                    )}
-                  </div>
-                  <span className="text-sm text-gray-500">{review.date}</span>
-                </div>
-                <div className="flex items-center space-x-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={14}
-                      className={i < review.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}
-                    />
-                  ))}
-                </div>
-                <p className="text-gray-700">{review.comment}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Related Products */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">You Might Also Like</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedProducts.map((relatedProduct, index) => (
-              <motion.div
-                key={relatedProduct.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="kawaii-card overflow-hidden kawaii-hover"
-              >
-                <img 
-                  className="w-full h-48 object-cover"
-                  alt={relatedProduct.name}
-                 src="https://images.unsplash.com/photo-1635865165118-917ed9e20936" />
-                <div className="p-6 space-y-4">
-                  <div>
-                    <h3 className="text-lg font-bold text-gray-800">{relatedProduct.name}</h3>
-                    <div className="flex items-center space-x-1 mt-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={12}
-                          className={i < Math.floor(relatedProduct.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xl font-bold text-pink-500">${relatedProduct.price}</span>
-                    <Link
-                      to={`/product/${relatedProduct.id}`}
-                      className="kawaii-button text-sm px-4 py-2"
-                    >
-                      View
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </motion.div>
   );
