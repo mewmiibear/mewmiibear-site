@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X, Mail, Heart } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from './UI/use-toast';
 
 const NewsletterPopup = ({ onClose }) => {
   const [email, setEmail] = useState('');

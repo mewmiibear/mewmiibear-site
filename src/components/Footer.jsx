@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, Mail, MapPin, Phone } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from './UI/use-toast';
 
 const Footer = () => {
   const handleSocialClick = (platform) => {

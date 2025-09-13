@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Search, ShoppingBag, Menu, X, Heart } from 'lucide-react';
-import { useCart } from '@/contexts/CartContext';
-import { toast } from '@/components/ui/use-toast';
+import { useCart } from '../contexts/CartContext';
+import { toast } from './UI/use-toast';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
