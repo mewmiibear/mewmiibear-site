@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --kawaii-pink: #FFB6C1;
+  --kawaii-blue: #B8E6FF;
+  --kawaii-lavender: #E6E6FA;
+  --kawaii-white: #FFFFFF;
+  --kawaii-cream: #FFF8F0;
+  --kawaii-rose: #FFE4E1;
+  --kawaii-mint: #F0FFF0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(135deg, var(--kawaii-cream) 0%, var(--kawaii-rose) 50%, var(--kawaii-blue) 100%);
+  min-height: 100vh;
+  color: #4A5568;
+}
+
+.kawaii-gradient {
+  background: linear-gradient(135deg, var(--kawaii-pink) 0%, var(--kawaii-lavender) 50%, var(--kawaii-blue) 100%);
+}
+
+.kawaii-shadow {
+  box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
+}
+
+.kawaii-hover {
+  transition: all 0.3s ease;
+}
+
+.kawaii-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255, 182, 193, 0.4);
+}
+
+.kawaii-bounce {
+  animation: kawaii-bounce 2s infinite;
+}
+
+@keyframes kawaii-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.kawaii-float {
+  animation: kawaii-float 3s ease-in-out infinite;
+}
+
+@keyframes kawaii-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.kawaii-pulse {
+  animation: kawaii-pulse 2s infinite;
+}
+
+@keyframes kawaii-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.kawaii-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 182, 193, 0.2);
+  border-radius: 20px;
+}
+
+.kawaii-button {
+  background: linear-gradient(135deg, var(--kawaii-pink) 0%, var(--kawaii-lavender) 100%);
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-weight: 600;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
+}
+
+.kawaii-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 182, 193, 0.4);
+}
+
+.kawaii-input {
+  border: 2px solid var(--kawaii-pink);
+  border-radius: 15px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.kawaii-input:focus {
+  outline: none;
+  border-color: var(--kawaii-lavender);
+  box-shadow: 0 0 0 3px rgba(230, 230, 250, 0.3);
+}
+
+.text-kawaii-pink {
+  color: var(--kawaii-pink);
+}
+
+.text-kawaii-blue {
+  color: var(--kawaii-blue);
+}
+
+.text-kawaii-lavender {
+  color: var(--kawaii-lavender);
+}
+
+.bg-kawaii-pink {
+  background-color: var(--kawaii-pink);
+}
+
+.bg-kawaii-blue {
+  background-color: var(--kawaii-blue);
+}
+
+.bg-kawaii-lavender {
+  background-color: var(--kawaii-lavender);
+}
+
+.bg-kawaii-white {
+  background-color: var(--kawaii-white);
+}
+
+.bg-kawaii-cream {
+  background-color: var(--kawaii-cream);
+}
+
+.bg-kawaii-rose {
+  background-color: var(--kawaii-rose);
+}
+
+.bg-kawaii-mint {
+  background-color: var(--kawaii-mint);
+}
+
+.border-kawaii-pink {
+  border-color: var(--kawaii-pink);
+}
+
+.border-kawaii-blue {
+  border-color: var(--kawaii-blue);
+}
+
+.border-kawaii-lavender {
+  border-color: var(--kawaii-lavender);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--kawaii-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--kawaii-pink);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--kawaii-lavender);
+}
