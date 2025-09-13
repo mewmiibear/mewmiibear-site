@@ -1,13 +1,17 @@
-import Auth from "./Auth";
-import Products from "./Products";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import AuthPage from "./pages/AuthPage";
+import Header from "./components/Header";
 
 function App() {
   return (
-    <div>
-      <h1>Welcome to Mewmii Bear Shop 🧸</h1>
-      <Auth />
-      <Products />
-    </div>
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/profile" element={<AuthPage />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { supabase } from "./lib/supabaseClient";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -8,20 +6,18 @@ export default function Auth() {
 
   async function handleSignUp(e) {
     e.preventDefault();
-    const { error } = await supabase.auth.signUp({ email, password });
-    setMessage(error ? error.message : "Check your email for confirmation link!");
-  }
-
-  async function handleSignIn(e) {
-    e.preventDefault();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setMessage(error ? error.message : "Signed in!");
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) {
+      setMessage(error.message);
+    } else {
+      setMessage("Check your email for a verification link!");
+    }
   }
 
   return (
     <div>
-      <h2>Auth</h2>
-      <form>
+      <h2>Register</h2>
+      <form onSubmit={handleSignUp}>
         <input
           type="email"
           placeholder="Email"
@@ -34,8 +30,7 @@ export default function Auth() {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <button onClick={handleSignUp}>Sign Up</button>
-        <button onClick={handleSignIn}>Sign In</button>
+        <button type="submit">Sign Up</button>
       </form>
       {message && <p>{message}</p>}
     </div>

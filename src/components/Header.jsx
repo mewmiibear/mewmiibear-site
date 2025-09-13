@@ -110,6 +110,14 @@ const Header = () => {
               ))}
             </div>
 
+
+            {/* Profile/Login */}
+            <Link to="/profile" className="kawaii-hover" title="Profile / Login">
+              <div className="w-10 h-10 bg-gradient-to-br from-yellow-200 to-pink-200 rounded-full flex items-center justify-center">
+                <span className="text-xl">👤</span>
+              </div>
+            </Link>
+
             {/* Cart */}
             <Link to="/cart" className="relative kawaii-hover">
               <div className="w-10 h-10 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full flex items-center justify-center">
@@ -159,6 +167,14 @@ const Header = () => {
                   {link.name}
                 </Link>
               ))}
+              {/* Profile/Login (Mobile) */}
+              <Link
+                to="/profile"
+                onClick={() => setIsMenuOpen(false)}
+                className={`font-semibold transition-colors ${location.pathname === "/profile" ? 'text-pink-500' : 'text-gray-600 hover:text-pink-500'}`}
+              >
+                Profile
+              </Link>
               
               {/* Mobile Search */}
               <form onSubmit={handleSearch} className="flex items-center">
