@@ -6,6 +6,7 @@ import ContactPage from "./pages/ContactPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ProductListPage from "./pages/ProductListPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -13,10 +14,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/profile" element={<AuthPage />} />
-  <Route path="/shop" element={<ProductListPage />} />
-  <Route path="/about" element={<AboutPage />} />
-  <Route path="/contact" element={<ContactPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/shop" element={<ProductListPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <Footer />
     </Router>

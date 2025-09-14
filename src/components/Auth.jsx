@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -7,14 +9,31 @@ export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     setMessage("");
-      // TODO: Replace with your new authentication logic here
-      setMessage("Auth logic removed. Please implement your new authentication system.");
-    setLoading(false);
+    try {
+      if (isLogin) {
+        // Login logic
+        const res = await axios.post("http://localhost:5000/api/login", { email, password });
+        localStorage.setItem("token", res.data.token);
+        setMessage("Login successful! Redirecting...");
+        navigate("/profile");
+      } else {
+        // Register logic
+        const res = await axios.post("http://localhost:5000/api/register", { email, password });
+        setMessage(res.data.message || "Registration successful! Check your email to verify.");
+      }
+    } catch (err) {
+      setMessage(
+        err.response?.data?.error || "Authentication failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

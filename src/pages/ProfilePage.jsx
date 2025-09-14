@@ -1,54 +1,47 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
-  const [user, setUser] = useState(null);
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem("token");
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const userRes = await axios.get("http://localhost:3000/profile", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUser(userRes.data.user);
-        setOrders(userRes.data.orders);
-      } catch (err) {
-        setUser(null);
-        setOrders([]);
-      } finally {
-        setLoading(false);
-      }
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/login"; // redirect if not logged in
+      return;
     }
-    fetchProfile();
-  }, [token]);
 
-  if (loading) return <div className="text-pink-500">Loading profile...</div>;
-  if (!user) return <div className="text-red-500">Not logged in or error loading profile.</div>;
+    fetch("http://localhost:5000/api/profile", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setProfile(data))
+      .catch((err) => console.error("Error loading profile:", err));
+  }, []);
+
+  if (!profile) return <p>Loading...</p>;
 
   return (
-    <div className="min-h-screen bg-pink-50 py-10">
-      <div className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-pink-600 mb-4">Profile</h2>
-        <div className="mb-6">
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Verified:</strong> {user.verified ? "Yes" : "No"}</p>
-        </div>
-        <h3 className="text-xl font-bold text-pink-500 mb-2">Orders</h3>
-        {orders.length === 0 ? (
-          <p>No orders found.</p>
-        ) : (
-          <ul className="list-disc pl-6">
-            {orders.map(order => (
-              <li key={order.id}>
-                Order #{order.id} - {order.status} - ${order.total}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Welcome {profile.user.email}!</h1>
+      <p>Status: {profile.user.is_verified ? "✅ Verified" : "❌ Not Verified"}</p>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2">Your Orders</h2>
+      {profile.orders.length === 0 ? (
+        <p>No orders yet.</p>
+      ) : (
+        <ul className="space-y-3">
+          {profile.orders.map((order) => (
+            <li key={order.id} className="border p-3 rounded-lg shadow">
+              <p><b>Product:</b> {order.product_name}</p>
+              <p><b>Quantity:</b> {order.quantity}</p>
+              <p><b>Price:</b> RM{order.price}</p>
+              <p><b>Ordered at:</b> {new Date(order.created_at).toLocaleString()}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

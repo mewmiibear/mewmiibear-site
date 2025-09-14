@@ -83,7 +83,7 @@ const HomePage = () => {
       className="min-h-screen"
     >
       <Helmet>
-        <title>Mewmii Bear's Shop - Cute Things for Happy Days 💕</title>
+        <title>New Arrivals</title>
         <meta name="description" content="Welcome to Mewmii Bear's Shop! Discover adorable stationery, plushies, lifestyle items, and accessories. Cute things for happy days!" />
       </Helmet>
 
