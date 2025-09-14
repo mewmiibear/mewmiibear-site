@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { supabase } from "./lib/supabaseClient";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -9,24 +8,15 @@ export default function Products() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetchProducts();
+    // TODO: Replace with your new product fetching logic
+    setProducts([]);
   }, []);
 
-  async function fetchProducts() {
-    const { data, error } = await supabase.from("products").select("*");
-    if (error) setMessage(error.message);
-    else setProducts(data);
-  }
-
-  async function handleAdd(e) {
+  function handleAdd(e) {
     e.preventDefault();
-    const { error } = await supabase.from("products").insert({ name, price: parseFloat(price), description: desc });
-    if (error) setMessage(error.message);
-    else {
-      setMessage("Product added!");
-      setName(""); setPrice(""); setDesc("");
-      fetchProducts();
-    }
+    // TODO: Replace with your new product adding logic
+    setMessage("Product logic removed. Please implement your new product system.");
+    setName(""); setPrice(""); setDesc("");
   }
 
   return (

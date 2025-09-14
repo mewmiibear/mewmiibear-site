@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 
@@ -9,13 +8,9 @@ const ProductListPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data, error } = await supabase.from('products').select('*');
-      if (error) setError(error.message);
-      else setProducts(data);
-      setLoading(false);
-    };
-    fetchProducts();
+    // TODO: Replace with your new product fetching logic
+    setProducts([]);
+    setLoading(false);
   }, []);
 
   if (loading) return <div className="flex justify-center items-center min-h-screen bg-pink-50 text-pink-500 text-xl">Loading products...</div>;

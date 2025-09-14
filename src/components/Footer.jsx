@@ -21,35 +21,49 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-br from-pink-50 to-purple-50 border-t-2 border-kawaii-pink">
+  <footer className="bg-[#ff7abc] border-t-2 border-kawaii-pink">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+  <div className="grid grid-cols- md:grid-cols-4 gap-20">
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full flex items-center justify-center kawaii-float">
-                <span className="text-xl">🧸</span>
-              </div>
-              <div>
-                <span className="text-xl font-bold text-pink-500">Mewmii Bear</span>
-                <p className="text-xs text-gray-500">Cute Things for Happy Days</p>
-              </div>
+              <img src="/text-logo.png" alt="Mewmii Bear Logo" className="h-7" />
             </div>
-            <p className="text-gray-600 text-sm">
+            {/* <p className="text-gray-600 text-sm">
               Bringing kawaii culture and adorable items to make every day a little more magical! 💕
-            </p>
-            <div className="flex space-x-3">
-              {['🧸', '💕', '🌸', '🎀'].map((emoji, index) => (
-                <motion.div
-                  key={index}
-                  className="w-8 h-8 bg-white rounded-full flex items-center justify-center kawaii-shadow kawaii-hover cursor-pointer"
-                  whileHover={{ scale: 1.1 }}
-                  onClick={() => handleSocialClick('Kawaii Emojis')}
-                >
-                  {emoji}
-                </motion.div>
-              ))}
+            </p> */}
+            <div className="flex space-x-3 mt-2">
+              <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white rounded-full flex items-center justify-center kawaii-shadow kawaii-hover cursor-pointer" title="Instagram">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" className="w-5 h-5" />
+              </a>
+              <a href="https://xhslink.com/m/4Hp2T7yLcDz" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white rounded-full flex items-center justify-center kawaii-shadow kawaii-hover cursor-pointer" title="TikTok">
+                <img src="https://pbs.twimg.com/profile_images/1085393775705419776/Z2GERXNS_400x400.jpg" alt="RedNote" className="w-5 h-5" />
+              </a>
+              <a href="mailto:mewmiibear@gmail.com" className="w-8 h-8 bg-white rounded-full flex items-center justify-center kawaii-shadow kawaii-hover cursor-pointer" title="Email">
+                <Mail className="w-5 h-5 text-pink-500" />
+              </a>
             </div>
+
+            {/* Contact Info */}
+            <div className="space-y-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2">
+                <Mail size={14} className="text-pink-400" />
+                <span>hello@mewmiibear.com</span>
+              </div>
+
+              {/* //phone number not available */}
+              {/* <div className="flex items-center space-x-2">
+                <Phone size={14} className="text-pink-400" />
+                <span>+60 1126637133</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MapPin size={14} className="text-pink-400" />
+                <span>Kawaii Land, Cute City</span>
+              </div> */}
+
+            
+            </div>
+            
           </div>
 
           {/* Quick Links */}
@@ -57,7 +71,6 @@ const Footer = () => {
             <span className="text-lg font-semibold text-gray-800">Quick Links</span>
             <div className="space-y-2">
               {[
-                { name: 'Home', path: '/' },
                 { name: 'Shop All', path: '/shop' },
                 { name: 'New Arrivals', path: '/shop/new' },
                 { name: 'Best Sellers', path: '/shop/bestsellers' },
@@ -80,10 +93,10 @@ const Footer = () => {
             <span className="text-lg font-semibold text-gray-800">Categories</span>
             <div className="space-y-2">
               {[
-                { name: '📝 Stationery', path: '/shop/stationery' },
-                { name: '🧸 Plushies', path: '/shop/plushies' },
-                { name: '🏠 Lifestyle', path: '/shop/lifestyle' },
-                { name: '👜 Accessories', path: '/shop/accessories' }
+                { name: 'Japan Sanrio', path: '/shop/japanSanrio' },
+                { name: 'Sanrio Inspired', path: '/shop/sanrioInspired' },
+                { name: 'Plushies', path: '/shop/plushies' },
+                { name: 'Accessories', path: '/shop/accessories' }
               ].map((category) => (
                 <Link
                   key={category.name}
@@ -96,28 +109,9 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Contact & Newsletter */}
-          <div className="space-y-4">
-            <span className="text-lg font-semibold text-gray-800">Stay Connected</span>
-            
-            {/* Contact Info */}
-            <div className="space-y-2 text-sm text-gray-600">
-              <div className="flex items-center space-x-2">
-                <Mail size={14} className="text-pink-400" />
-                <span>hello@mewmiibear.com</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Phone size={14} className="text-pink-400" />
-                <span>+1 (555) KAWAII</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <MapPin size={14} className="text-pink-400" />
-                <span>Kawaii Land, Cute City</span>
-              </div>
-            </div>
-
-            {/* Newsletter */}
-            <div className="space-y-2">
+          {/* Newsletter */}
+              <div className="space-y-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2"></div>
               <p className="text-sm text-gray-600">Join the Mewmii Bear Club! 💕</p>
               <form onSubmit={handleNewsletterSubmit} className="space-y-2">
                 <input
@@ -133,29 +127,7 @@ const Footer = () => {
                 </button>
               </form>
             </div>
-
-            {/* Social Media */}
-            <div className="space-y-2">
-              <p className="text-sm text-gray-600">Follow us:</p>
-              <div className="flex space-x-2">
-                {[
-                  { name: '小红书', icon: '📱' },
-                  { name: 'Instagram', icon: '📷' },
-                  { name: 'TikTok', icon: '🎵' }
-                ].map((social) => (
-                  <button
-                    key={social.name}
-                    onClick={() => handleSocialClick(social.name)}
-                    className="w-8 h-8 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full flex items-center justify-center kawaii-hover text-sm"
-                    title={social.name}
-                  >
-                    {social.icon}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        </div>       
 
         {/* Bottom Bar */}
         <div className="border-t border-kawaii-pink mt-8 pt-6">
@@ -182,7 +154,7 @@ const Footer = () => {
               >
                 Terms of Service
               </button>
-              <span>© 2024 Mewmii Bear's Shop</span>
+              <span>© 2025 Mewmii Bear</span>
             </div>
           </div>
         </div>
